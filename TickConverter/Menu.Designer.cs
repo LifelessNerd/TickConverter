@@ -43,6 +43,7 @@
             this.toRealtimeButton.TabIndex = 0;
             this.toRealtimeButton.Text = "To Realtime";
             this.toRealtimeButton.UseVisualStyleBackColor = true;
+            this.toRealtimeButton.Click += new System.EventHandler(this.toRealtimeButton_Click);
             // 
             // TitleText
             // 
@@ -62,6 +63,7 @@
             this.toTicksButton.TabIndex = 2;
             this.toTicksButton.Text = "To Ticks";
             this.toTicksButton.UseVisualStyleBackColor = true;
+            this.toTicksButton.Click += new System.EventHandler(this.toTicksButton_Click);
             // 
             // fromTicksLabel
             // 
@@ -81,7 +83,7 @@
             this.fromRealtimeLabel.TabIndex = 4;
             this.fromRealtimeLabel.Text = "from Realtime";
             // 
-            // TicksConverterMenu
+            // Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -91,7 +93,7 @@
             this.Controls.Add(this.toTicksButton);
             this.Controls.Add(this.TitleText);
             this.Controls.Add(this.toRealtimeButton);
-            this.Name = "Ticks Converter";
+            this.Name = "Menu";
             this.Text = "Ticks Converter";
             this.ResumeLayout(false);
             this.PerformLayout();

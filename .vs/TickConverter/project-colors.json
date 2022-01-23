@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "eb1b0964-7a4f-4835-9cdd-084ec9aec253": {
+      "ProjectGuid": "eb1b0964-7a4f-4835-9cdd-084ec9aec253",
+      "DisplayName": "TickConverter",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}

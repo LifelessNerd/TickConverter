@@ -18,5 +18,26 @@ namespace TickConverter
             //Formatting is done in the designer
 
         }
+
+        private void toRealtimeButton_Click(object sender, EventArgs e)
+        {
+            
+            TicksToRealTime ticksToRealtime = new TicksToRealTime();
+            Form menu = this;
+            this.Hide();
+            ticksToRealtime.ShowDialog();
+            //Paused
+            this.Show();
+        }
+
+        private void toTicksButton_Click(object sender, EventArgs e)
+        {
+            RealtimeToTicks realtimeToTicks = new RealtimeToTicks();
+            Form menu = this;
+            this.Hide();
+            realtimeToTicks.ShowDialog();
+            //Paused
+            this.Show();
+        }
     }
 }
