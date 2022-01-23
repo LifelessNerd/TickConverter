@@ -129,6 +129,7 @@ namespace TickConverter
             this.Controls.Add(this.textBoxTicks);
             this.Controls.Add(this.TitleText);
             this.Name = "RealtimeToTicks";
+            this.Text = "Realtime to Ticks";
             this.ResumeLayout(false);
             this.PerformLayout();
 

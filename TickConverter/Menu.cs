@@ -39,5 +39,15 @@ namespace TickConverter
             //Paused
             this.Show();
         }
+
+        private void ListToRealtimeButton_Click(object sender, EventArgs e)
+        {
+            ListToRealtime listToRealtime = new ListToRealtime();
+            Form menu = this;
+            this.Hide();
+            listToRealtime.ShowDialog();
+            //Paused
+            this.Show();
+        }
     }
 }

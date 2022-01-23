@@ -92,7 +92,7 @@ namespace TickConverter
             // 
             // TicksToRealTime
             // 
-            this.ClientSize = new System.Drawing.Size(423, 314);
+            this.ClientSize = new System.Drawing.Size(419, 314);
             this.Controls.Add(this.textBoxMinutes);
             this.Controls.Add(this.textBoxHours);
             this.Controls.Add(this.textBoxDays);
@@ -101,6 +101,7 @@ namespace TickConverter
             this.Controls.Add(this.textBoxInput);
             this.Controls.Add(this.TitleText);
             this.Name = "TicksToRealTime";
+            this.Text = "Ticks to Realtime";
             this.ResumeLayout(false);
             this.PerformLayout();
 

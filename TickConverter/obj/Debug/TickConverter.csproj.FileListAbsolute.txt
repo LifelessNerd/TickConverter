@@ -11,3 +11,5 @@ C:\Users\Menee\Documents\GitHub\TickConverter\TickConverter\TickConverter\obj\De
 C:\Users\Menee\Documents\GitHub\TickConverter\TickConverter\TickConverter\obj\Debug\TickConverter.Menu.resources
 C:\Users\Menee\Documents\GitHub\TickConverter\TickConverter\TickConverter\obj\Debug\TickConverter.TicksToRealTime.resources
 C:\Users\Menee\Documents\GitHub\TickConverter\TickConverter\TickConverter\obj\Debug\TickConverter.RealtimeToTicks.resources
+C:\Users\Menee\Documents\GitHub\TickConverter\TickConverter\TickConverter\obj\Debug\TickConverter.ListToRealtime.resources
+C:\Users\Menee\Documents\GitHub\TickConverter\TickConverter\TickConverter\obj\Debug\TickConverter.HelpForm.resources
