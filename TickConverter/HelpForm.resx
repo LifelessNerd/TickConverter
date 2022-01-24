@@ -120,8 +120,9 @@
   <data name="richTextBox1.Text" xml:space="preserve">
     <value>Lists need to be formatted as follows. My (quite unfinished) Minecraft plugin outputs ticks like this: 
 
-{John=8000, Jack=10000, Luke=10001, LifelessNerd=6000, Callum=20} 
+{John=8000,Jack=10000,Luke=10001,LifelessNerd=6000,Callum=20} 
 
+All spaces need to be removed.
 Dictionaries and Collections also print stuff like this, so you could use that aswell.</value>
   </data>
 </root>

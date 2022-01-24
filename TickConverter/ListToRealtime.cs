@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace TickConverter
@@ -124,12 +125,30 @@ namespace TickConverter
         private void CalculateButton_Click(object sender, System.EventArgs e)
         {
             try
-            {
-                string input = this.richTextBoxInput.Text;
-                input.Remove(1, 1);
-                
+            {   
+                richTextBoxOutput.Text = "";
 
-                richTextBoxOutput.Text = input;
+                string input = this.richTextBoxInput.Text;
+                input = input.TrimStart('{');
+                input = input.TrimEnd('}');
+                Dictionary<String, String> tickData = new Dictionary<String, String>();
+
+                String[] entries = input.Split(',');
+                
+                foreach (string entry in entries)
+                {
+                    String[] entryData = entry.Split('=');
+                    tickData.Add(entryData[0], entryData[1]);
+
+                    int ticks = Int32.Parse(tickData[entryData[0]]);
+                    int secs = ticks / 20;
+                    Console.WriteLine(ticks);
+                    TimeSpan t = TimeSpan.FromSeconds(secs);
+                    string richAnswer = string.Format("{0:D1}d, {1:D1}h, {2:D1}m, {3:D1}s", t.Days, t.Hours, t.Minutes, t.Seconds);
+
+                    richTextBoxOutput.Text = richTextBoxOutput.Text + entryData[0] + " - " + richAnswer + "\n";
+                }
+                
             }
             catch (Exception ex)
             {
