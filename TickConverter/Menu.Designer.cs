@@ -36,6 +36,7 @@
             this.fromRealtimeLabel = new System.Windows.Forms.Label();
             this.ListToRealtimeButton = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.createPictureButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -107,11 +108,22 @@
             this.pictureBox1.TabIndex = 6;
             this.pictureBox1.TabStop = false;
             // 
+            // createPictureButton
+            // 
+            this.createPictureButton.Location = new System.Drawing.Point(153, 198);
+            this.createPictureButton.Name = "createPictureButton";
+            this.createPictureButton.Size = new System.Drawing.Size(97, 52);
+            this.createPictureButton.TabIndex = 7;
+            this.createPictureButton.Text = "Create Image with List";
+            this.createPictureButton.UseVisualStyleBackColor = true;
+            this.createPictureButton.Click += new System.EventHandler(this.createPictureButton_Click);
+            // 
             // Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(399, 338);
+            this.Controls.Add(this.createPictureButton);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.ListToRealtimeButton);
             this.Controls.Add(this.fromRealtimeLabel);
@@ -136,6 +148,7 @@
         private System.Windows.Forms.Label fromRealtimeLabel;
         private System.Windows.Forms.Button ListToRealtimeButton;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button createPictureButton;
     }
 }
 

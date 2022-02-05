@@ -49,5 +49,15 @@ namespace TickConverter
             //Paused
             this.Show();
         }
+
+        private void createPictureButton_Click(object sender, EventArgs e)
+        {
+            previewImage imageCreator = new previewImage();
+            Form menu = this;
+            this.Hide();
+            imageCreator.ShowDialog();
+            //Paused
+            this.Show();
+        }
     }
 }
