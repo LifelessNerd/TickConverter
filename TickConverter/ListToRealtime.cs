@@ -7,7 +7,6 @@ namespace TickConverter
     public class ListToRealtime : Form
     {
         private Label label1;
-        private System.ComponentModel.IContainer components;
         private Button buttonHelp;
         private RichTextBox richTextBoxInput;
         private RichTextBox richTextBoxOutput;
