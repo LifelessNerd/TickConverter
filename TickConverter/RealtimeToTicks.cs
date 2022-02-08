@@ -19,6 +19,7 @@ namespace TickConverter
         {
             //Constructor
             InitializeComponent();
+            this.Icon = Properties.Resources.Icon;
         }
 
         private void InitializeComponent()

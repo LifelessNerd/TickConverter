@@ -12,10 +12,14 @@ namespace TickConverter
 {
     public partial class Menu : Form
     {
+
+        
+
         public Menu()
         {
             InitializeComponent();
             //Formatting is done in the designer
+            this.Icon = Properties.Resources.Icon;
 
         }
 

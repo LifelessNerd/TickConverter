@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
+using System.Linq;
+using System.Net;
 using System.Windows.Forms;
 
 namespace TickConverter
@@ -20,29 +23,65 @@ namespace TickConverter
         private FontDialog fontDialog;
         private ColorDialog colorDialog;
         private ColorDialog accentColorDialog;
-        private Font font;
-        private Brush kleur;
+        private Font tekstFont;
+        private Font playTimeFont;
         private Button helpButton;
-        private Brush accentKleur;
-        private Brush transKleur;
+        private Brush kleurBrush;
+        private Brush accentKleurBrush;
+        private Brush transKleurBrush;
+        private Color kleurColor;
+        private Color transKleurColor;
+        private Color accentKleurColor;
         private Button selectKleur;
         private Button selectAKleur;
         private String imageLocation;
+        Rectangle[] rectangles = new Rectangle[6];
+        Point[] titlePoints = new Point[6];
+        Point[] contentPoints = new Point[6];
+        Point[] imagePoints = new Point[6];
+        Point[] playtimePoints = new Point[6];
+        string url;
 
-        
+
+
 
         public previewImage()
         {
             InitializeComponent();
+
+            this.Icon = Properties.Resources.Icon;
+
             fontDialog = new FontDialog();
             colorDialog = new ColorDialog();
             accentColorDialog = new ColorDialog();
             fontDialog.MinSize = 16;
-            fontDialog.MaxSize = 16;
-            font = new Font("Arial", 24, FontStyle.Regular);
-            accentKleur = new SolidBrush(Color.White);
-            kleur = new SolidBrush(Color.Black);
-            transKleur = new SolidBrush(Color.FromArgb(150, Color.Black));
+            fontDialog.MaxSize = 64;
+            tekstFont = new Font("Coolvetica RG", 42, FontStyle.Regular);
+            playTimeFont = new Font("Coolvetica RG", 64, FontStyle.Regular);
+            fontDialog.Font = tekstFont;
+            kleurColor = Color.FromArgb(255, Color.Black);
+            transKleurColor = Color.FromArgb(150, Color.Black);
+            accentKleurColor = Color.FromArgb(255,255,255,255);
+            accentKleurBrush = new SolidBrush(accentKleurColor);
+            kleurBrush = new SolidBrush(kleurColor);
+            transKleurBrush = new SolidBrush(transKleurColor);
+
+
+            rectangles[0] = new Rectangle(30, 46, 600, 470);
+            rectangles[1] = new Rectangle(660, 46, 600, 470);
+            rectangles[2] = new Rectangle(1290, 46, 600, 470);
+            rectangles[3] = new Rectangle(30, 563, 600, 470);
+            rectangles[4] = new Rectangle(660, 563, 600, 470);
+            rectangles[5] = new Rectangle(1290, 563, 600, 470);
+
+            for (int k = 0; k < 6; k++)
+            {
+                titlePoints[k] = new Point(rectangles[k].X + 410, rectangles[k].Y + 120);
+                imagePoints[k] = new Point(rectangles[k].X + 30, rectangles[k].Y + 30);
+                playtimePoints[k] = new Point(rectangles[k].X + 300, rectangles[k].Y + 350);
+            }
+
+            url = "https://minecraftskinstealer.com/api/v1/skin/download/face/";
 
         }
 
@@ -63,11 +102,12 @@ namespace TickConverter
             // 
             // inputBox
             // 
+            this.inputBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.inputBox.Location = new System.Drawing.Point(25, 136);
             this.inputBox.Name = "inputBox";
             this.inputBox.Size = new System.Drawing.Size(306, 185);
             this.inputBox.TabIndex = 1;
-            this.inputBox.Text = "{John=8000,Jack=10000,Luke=10001,LifelessNerd=6000,Callum=20}";
+            this.inputBox.Text = "{John=8000,Jack=10000,Luke=10001,LifelessNerd=6000,Callum=20,Luka=121722}";
             // 
             // previewImageButton
             // 
@@ -87,6 +127,7 @@ namespace TickConverter
             this.generateImageButton.TabIndex = 4;
             this.generateImageButton.Text = "Generate image and Save";
             this.generateImageButton.UseVisualStyleBackColor = true;
+            this.generateImageButton.Click += new System.EventHandler(this.generateImageButton_Click);
             // 
             // previewPicture
             // 
@@ -201,7 +242,7 @@ namespace TickConverter
             
             if(fontDialog.ShowDialog() == DialogResult.OK)
             {
-                font = fontDialog.Font;
+                tekstFont = fontDialog.Font;
                 DialogResult fontWarning = MessageBox.Show("Not all fonts will align in the picture. Be sure to preview the image before saving.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
@@ -211,41 +252,67 @@ namespace TickConverter
             
             try
             {
+                //Creates bitmap and crops it to 1920x1080
                 uncroppedImage = new Bitmap(imageLocation);
                 outputImage = new Bitmap(uncroppedImage, new Size(1920, 1080));
 
                 //Blur
-                Blur blur = new Blur(outputImage as Bitmap);
+                Blur blur = new Blur(outputImage);
                 outputImage = blur.Process(5);
 
+                //Set pictureBox image to outputImage after blur
                 previewPicture.Image = outputImage;
                 Graphics gr = Graphics.FromImage(outputImage);
-                Dictionary<String, String> realtimeData = dataToDictionary();
 
-                Teken(gr, realtimeData);
+                Dictionary<String, TimeSpan> realtimeData = dataToDictionary();
+
+                Draw(gr, realtimeData);
                 
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            catch (Exception ex) { MessageBox.Show(ex.ToString()); }
         }
 
-        private void Teken(Graphics gr, Dictionary<String, String> data)
+        private void Draw(Graphics gr, Dictionary<String, TimeSpan> data)
         {
-            Rectangle[] rectangles = new Rectangle[5];
-            rectangles[0] = new Rectangle(30, 30, 600, 450);
-            rectangles[1] = new Rectangle(660, 30, 600, 450);
-            rectangles[2] = new Rectangle(1290, 30, 600, 450);
-            SolidBrush transKleur2 = new SolidBrush(Color.FromArgb(150, 0, 0, 0));
-            for (int i = 0; i < 6; i++)
+            
+
+            StringFormat stringFormat = new StringFormat();
+            stringFormat.Alignment = StringAlignment.Center;
+            stringFormat.LineAlignment = StringAlignment.Center;
+   
+            gr.FillRectangles(transKleurBrush, rectangles);
+
+            var sortedDict = from entry in data orderby entry.Value descending select entry;
+            Dictionary<String, TimeSpan> sortedDataDict = sortedDict.ToDictionary<KeyValuePair<String, TimeSpan>, String, TimeSpan>(pair => pair.Key, pair => pair.Value);
+            try
             {
-                gr.FillRectangles(transKleur2, rectangles);
-            }
-            foreach (KeyValuePair<String, String> entry in data)
-            {
-               //gr.DrawString(entry.Key + " : " + entry.Value, font, Brushes.Black, 10, 10);
-            }
+                
+                WebClient client = new WebClient();
+
+                //Content drawing
+                for (int teller = 0; teller < 6; teller++)
+                {
+                    //Name
+                    gr.DrawString(sortedDataDict.ElementAt(teller).Key, tekstFont, accentKleurBrush, titlePoints[teller], stringFormat);
+                    //Head + outline
+                    Stream stream = client.OpenRead(url + sortedDataDict.ElementAt(teller).Key);
+                    Bitmap bustImage = new Bitmap(stream);
+                    gr.FillRectangle(kleurBrush, new Rectangle(imagePoints[teller].X - 10, imagePoints[teller].Y - 10, 220, 220));
+                    gr.DrawImage(bustImage, new Rectangle(imagePoints[teller], new Size(200,200)));
+
+                    //Playtime
+                    TimeSpan playTime = data.ElementAt(teller).Value;
+                    string richAnswer = string.Format("{0:D1}d, {1:D1}h, {2:D1}m, {3:D1}s", playTime.Days, playTime.Hours, playTime.Minutes, playTime.Seconds);
+                    gr.DrawString(richAnswer, new Font(tekstFont.FontFamily, tekstFont.Size + 16, FontStyle.Regular), accentKleurBrush, playtimePoints[teller], stringFormat);
+                }
+                
+
+            } catch (Exception ex) { DialogResult res = MessageBox.Show("Invalid list of players, you need 6 entries"); } //Waarschijnlijk is lijst niet lang genoeg
+
+
         }
 
-        private Dictionary<String, String> dataToDictionary()
+        private Dictionary<String, TimeSpan> dataToDictionary()
         {
             try
             {
@@ -254,7 +321,7 @@ namespace TickConverter
                 input = input.TrimStart('{');
                 input = input.TrimEnd('}');
                 Dictionary<String, String> tickData = new Dictionary<String, String>();
-                Dictionary<String, String> realtimeData = new Dictionary<String, String>();
+                Dictionary<String, TimeSpan> realtimeData = new Dictionary<String, TimeSpan>();
 
                 String[] entries = input.Split(',');
 
@@ -265,11 +332,11 @@ namespace TickConverter
 
                     int ticks = Int32.Parse(tickData[entryData[0]]);
                     int secs = ticks / 20;
-                    Console.WriteLine(ticks);
+
                     TimeSpan t = TimeSpan.FromSeconds(secs);
+                    realtimeData.Add(entryData[0], t);
                     string richAnswer = string.Format("{0:D1}d, {1:D1}h, {2:D1}m, {3:D1}s", t.Days, t.Hours, t.Minutes, t.Seconds);
-                    realtimeData.Add(entryData[0], richAnswer);
-                    
+
                 }
                 
                 return realtimeData;
@@ -292,8 +359,14 @@ namespace TickConverter
         {
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
-                kleur = new SolidBrush(colorDialog.Color);
-                
+
+                kleurColor = colorDialog.Color;
+                transKleurColor = Color.FromArgb(150, kleurColor);
+
+                //Update
+                accentKleurBrush = new SolidBrush(accentKleurColor);
+                kleurBrush = new SolidBrush(kleurColor);
+                transKleurBrush = new SolidBrush(transKleurColor);
             }
         }
 
@@ -301,8 +374,23 @@ namespace TickConverter
         {
             if (accentColorDialog.ShowDialog() == DialogResult.OK)
             {
-                accentKleur = new SolidBrush(accentColorDialog.Color);
+                accentKleurColor = accentColorDialog.Color;
 
+                //Update
+                accentKleurBrush = new SolidBrush(accentKleurColor);
+                kleurBrush = new SolidBrush(kleurColor);
+                transKleurBrush = new SolidBrush(transKleurColor);
+            }
+        }
+
+        private void generateImageButton_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "PNG files | *.png | JPG files | *.jpg | JPEG files | *.jpeg";
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                outputImage.Save(saveFileDialog.FileName);
             }
         }
     }

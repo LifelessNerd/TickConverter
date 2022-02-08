@@ -14,3 +14,7 @@ C:\Users\Menee\Documents\GitHub\TickConverter\TickConverter\TickConverter\obj\De
 C:\Users\Menee\Documents\GitHub\TickConverter\TickConverter\TickConverter\obj\Debug\TickConverter.ListToRealtime.resources
 C:\Users\Menee\Documents\GitHub\TickConverter\TickConverter\TickConverter\obj\Debug\TickConverter.HelpForm.resources
 C:\Users\Menee\Documents\GitHub\TickConverter\TickConverter\TickConverter\obj\Debug\TickConverter.previewImage.resources
+C:\Users\Menee\Documents\GitHub\TickConverter\TickConverter\TickConverter\bin\Debug\TickConverter.exe.manifest
+C:\Users\Menee\Documents\GitHub\TickConverter\TickConverter\TickConverter\bin\Debug\TickConverter.application
+C:\Users\Menee\Documents\GitHub\TickConverter\TickConverter\TickConverter\obj\Debug\TickConverter.exe.manifest
+C:\Users\Menee\Documents\GitHub\TickConverter\TickConverter\TickConverter\obj\Debug\TickConverter.application

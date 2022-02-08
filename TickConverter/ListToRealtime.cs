@@ -18,6 +18,7 @@ namespace TickConverter
         {
             //Constructor
             InitializeComponent();
+            this.Icon = Properties.Resources.Icon;
         }
 
         private void InitializeComponent()
@@ -141,7 +142,7 @@ namespace TickConverter
 
                     int ticks = Int32.Parse(tickData[entryData[0]]);
                     int secs = ticks / 20;
-                    Console.WriteLine(ticks);
+
                     TimeSpan t = TimeSpan.FromSeconds(secs);
                     string richAnswer = string.Format("{0:D1}d, {1:D1}h, {2:D1}m, {3:D1}s", t.Days, t.Hours, t.Minutes, t.Seconds);
 

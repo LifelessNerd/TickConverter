@@ -5,6 +5,9 @@ using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
+// https://github.com/mdymel/superfastblur 
+// mdymel/superfastblur is licensed under the MIT License
+
 namespace TickConverter
 {
     public class Blur
