@@ -11,6 +11,7 @@ namespace TickConverter
 {
     class previewImage : Form
     {
+        
         private RichTextBox inputBox;
         private Button previewImageButton;
         private Button generateImageButton;
@@ -41,7 +42,6 @@ namespace TickConverter
         Point[] imagePoints = new Point[6];
         Point[] playtimePoints = new Point[6];
         string url;
-
 
 
 

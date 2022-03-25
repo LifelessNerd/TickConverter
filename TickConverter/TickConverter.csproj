@@ -109,6 +109,9 @@
     <Compile Include="RealtimeToTicks.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="StatsImage.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="TicksToRealTime.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -132,6 +135,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RealtimeToTicks.resx">
       <DependentUpon>RealtimeToTicks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StatsImage.resx">
+      <DependentUpon>StatsImage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TicksToRealTime.resx">
       <DependentUpon>TicksToRealTime.cs</DependentUpon>

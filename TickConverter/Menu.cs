@@ -56,10 +56,12 @@ namespace TickConverter
 
         private void createPictureButton_Click(object sender, EventArgs e)
         {
-            previewImage imageCreator = new previewImage();
+            //previewImage imageCreator = new previewImage();
+            StatsImage statsImage = new StatsImage();
             Form menu = this;
             this.Hide();
-            imageCreator.ShowDialog();
+            statsImage.ShowDialog();
+            //imageCreator.ShowDialog();
             //Paused
             this.Show();
         }
